@@ -1,0 +1,47 @@
+body {
+  background-image: url("images/backgroundimg.jpg");
+}
+form {
+  text-align:center;
+}
+h1 {
+  text-align: center;
+  color: black;
+
+}
+.popover {
+	align: center;
+	display: none;
+	z-index: 2;
+	height: 250px;
+	width: 300px;
+  margin:0 auto;
+  background-color: transparent;
+}
+h3 {
+}
+#steps {
+  color: white;
+  text-align:center;
+}
+#solution {
+  color: white;
+  text-align:center;
+}
+#question {
+  color:white;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 275px;
+  height: 300px;
+  font-size:xx-large;
+}
+#questionBox {
+  background-image: url("images/stickynote.png");
+  margin: 0 auto;
+  height: 300px;
+  width: 600px;
+  background-color: #e0e0e0;
+  opacity: 0.9;
+  box-shadow: 10px 10px 5px #888888;
+}

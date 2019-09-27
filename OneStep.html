@@ -1,0 +1,204 @@
+<html>
+
+<head>
+<title>Math Games: One Step Problems</title>
+<style>
+h1 {
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+<h1>One Step Problems</h1>
+<h3 id = "correctText"></h3>
+<h3 id = "wrongText"></h3>
+<div id = "timer" style="text-align: center;"></div>
+<br>
+<br>
+<h2 id = "question" style ="text-align:center"></h2>
+<br>
+<br>
+<form id ="myForm" name = "user-input" style="text-align:center;">
+  <input type="text" name="ans" id = "ans"><br><br>
+  <input type="submit" value="Submit">
+</form>
+<br>
+<ol id = "ol">
+
+</ol>
+<ul id = "sol">
+
+</ul>
+<script type = "text/javascript">
+"use strict";
+// initialize all variables being used
+var textCorrect = document.getElementById('correctText');
+var numCorrect = 0;
+var textWrong = document.getElementById('wrongText');
+var numWrong = 0;
+var ques = document.getElementById('question');
+var userAns = document.getElementById("ans").value;
+var x;
+var lhs = [];
+var rhs = [];
+var next = 0;
+var instr = [];
+var desc = [];
+var sol = [];
+var instrID;
+// var ranNum2 = Math.floor(Math.random() * ((10-2)+1) + 2);
+
+function add(){
+  // generate a random number between 2 - 10
+  var ranNum1 = Math.floor(Math.random() * ((10-2)+1) + 2);
+  // create variable to access the previous element
+  var pre = next - 1;
+  // set the value of the left side of the equation after add to x
+  lhs[next]= lhs[pre] + " + " +ranNum1;
+  // set the value of the right side of the equation after add to the answer
+  rhs[next] = rhs[pre] + ranNum1;
+  // set discrption text on how the problem is built
+  desc[next] = "<li>add " + ranNum1 + ": " + lhs[next] + " = " + rhs[next] + "</li>";
+  // set the solution description text show how to undo the addition
+  sol[next] = "<li><b>subtract</b> both sides by " + ranNum1 + " to elimate this constant. </li>"
+  // set text of html to equation
+  ques.innerHTML = lhs[next] + " = " + rhs[next];
+  // increment by 1
+  next++;
+}
+
+function executeInstructionQueue() {
+
+  for ( var i = 0; i < instr.length; i++) {
+    if (instr[i] == 0) {
+      init();
+    }
+    else if(instr[i] == 1) {
+      add(i);
+    }
+    else if (instr[i] == 2) {
+      multiply(i);
+    }
+  }
+  // console.log(instr);
+}
+
+function init() {
+  // generate random number between 0 and to as the answer of equation
+  x = Math.floor(Math.random() * 11);
+  // set value of the left hand side to the to the string x
+  lhs[next] = "x";
+  // set the value of x to the in variable x
+  rhs[next] = x;
+  // desc[0] = is set to x which is a random number
+  desc[next] = "<li>set answer: " + x +". "  + lhs[next] + " = " + x + "</li>";
+  // sol[0] = html text
+  sol[next] = "<li><b>Done</b></li>";
+  // increment next by 1 to get to the next element in the arrays
+  ques.innerHTML = lhs[next] + " = " + rhs[next];
+  // increment by 1
+  next++;
+}
+function isParenthesisRequired(current,instrID) {
+// if its the second operation executed or higher and instrID is 2 meaning multiply set to true else false
+  if(current >= 2 && instrID == 2) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+function loadInstructionQueue() {
+  // run loop however many step equations you want other than the equation that instr[0] genertates
+  var numOfSteps = 3;
+  for (var slot = 0; slot < numOfSteps; slot++) {
+    // to retrieve the previous variable in the Array
+    // var pre = slot - 1;
+    if (slot == 0) {
+      instrID = 0;
+    }
+    else {
+    // console.log(instr[pre]);
+    instrID = Math.floor(Math.random() * 2) + 1;
+    // add n2 to instr[slot]
+    }
+    instr.push(instrID);
+    // console.log(instr[pre]);
+    // console.log(instr[pre] == instr[slot]);
+  }
+
+}
+
+function main(){
+  loadInstructionQueue();
+  PrintInstructionQueue();
+  executeInstructionQueue();
+  // console.log(instr);
+}
+
+function multiply(current){
+  // generate number between 2 and 10
+  // access previous element
+  var pre = next - 1;
+  // set value of left handed side after multiplying
+  // search for the previous lhs element on the lhs
+  //generate random number that the it is multiplied by
+
+  var ranNum2 = Math.floor(Math.random() * ((10-2)+1) + 2);
+
+  // get the value of the current id
+  instrID = instr[current];
+  // if parenthesis is requred do so
+  if (isParenthesisRequired(current,instrID) == true) {
+    lhs[next] = ranNum2 + "(" + lhs[pre] +")";
+  }
+  // dont add
+  else {
+    lhs[next] = ranNum2 + lhs[pre];
+  }
+  // set value of right handed side
+  rhs[next] = rhs[pre] * ranNum2;
+  // set description of how the equation was built
+  desc[next] = "<li>multiply by " + ranNum2 + ": " + lhs[next] + " = " + rhs[next] + "</li>" ;
+  // set description of how the equation was solved
+  sol[next] = "<li><b>divide</b> each side by " + ranNum2 + " eliminating parethesis on the left and dividing by " + ranNum2 + " on the right.</li>"
+  // set value of html
+  ques.innerHTML = lhs[next] + " = " + rhs[next];
+  // increment by 1
+  next++;
+}
+
+function PrintInstructionQueue(){
+// get value of of  html elements
+  var steps = document.getElementById("ol");
+  var solution = document.getElementById("sol");
+// for loop that starts at 0 and stops at the length of the description
+  for (var i = 0; i < desc.length; i++){
+    // set the value of the list item to the description
+      steps.innerHTML += desc[i];
+
+    }
+  // loop backward to get the description
+  for (var i = desc.length - 1; i >= 0; i--) {
+    // set the value of the list item to the solution
+      solution.innerHTML += sol[i];
+    }
+  }
+
+  function regenerate() {
+    instrID = Math.floor(Math.random() * 2) + 1;
+    alert("Instruction " + r);
+    alert("Instruction Array "+instr);
+}
+
+function subtract(ranNum1) {
+
+}
+// start the game
+main();
+
+</script>
+</body>
+
+</html>

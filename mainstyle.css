@@ -1,0 +1,34 @@
+header {
+  background-color: white;
+}
+body {
+  background-color: #f4dc9c;
+}
+h1 {
+  text-align: center;
+}
+/*div {
+
+  background-color: white;
+  margin: auto;
+  width: 70%;
+  height: 100%;
+}*/
+button {
+    background-color:  light gray; /* Green */
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+}
+.button1 {
+    /*position: absolute;
+    left: 200px;
+    top: 150px;*/
+}
+p {
+  font-family: palantino;
+}
